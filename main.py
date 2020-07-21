@@ -1,5 +1,5 @@
 import os
-from tkinter import Tk, Frame, ttk, BOTH, StringVar, filedialog
+from tkinter import Tk, Frame, ttk, BOTH, StringVar, filedialog, Toplevel
 from tkinter.ttk import *
 from PIL import Image, ImageTk
 from pathlib import Path
@@ -32,10 +32,17 @@ class FileManager(Frame):
         images = self.load_top_bar_images()
         self.top_bar_buttons = []
 
+        # First Button
         self.open_folder_button = ttk.Button(
             self.top_frame, image=images[0], command=self.select_folder)
-        self.open_folder_button.grid(column=0, row=1)
+        self.open_folder_button.grid(column=1, row=1)
         self.open_folder_button.image = images[0]
+
+        # Second Button
+        self.rename_current_folder = ttk.Button(
+            self.top_frame, image=images[1], command=self.rename_current_dir)
+        self.rename_current_folder.grid(column=2, row=1)
+        self.rename_current_folder.image = images[1]
 
     def body(self):
         self.body = ttk.Frame(
@@ -61,7 +68,27 @@ class FileManager(Frame):
         path = filedialog.askdirectory()
         self._folder_path.set(path)
 
-    @ staticmethod
+# In completeMethod
+    def rename_current_dir(self):
+        # In completeMethod
+        def submit():
+            data = entry1.get()
+            print(data)
+
+        print('Hello')
+        newWindow = Toplevel(self.parent)
+        newWindow.title("New Window")
+        newWindow.geometry("200x100")
+        input_text = StringVar()
+        Label(newWindow, text='Enter New Name').grid(
+            column=1, row=1, sticky='nesw', padx=43)
+        entry1 = Entry(newWindow, textvariable=input_text)
+        entry1.focus_force()
+        entry1.grid(column=1, row=2, sticky='nesw', padx=20, pady=13)
+        Button(newWindow, text='Submt', command=submit).grid(
+            column=1, row=3, sticky='nesw', padx=43)
+
+    @staticmethod
     def resource_path(relative_path):
         """ Get absolute path to resource, works for dev and for PyInstaller """
         try:
