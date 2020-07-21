@@ -22,6 +22,7 @@ class FileManager(Frame):
     def gui(self):
         self.config()
         self.top_bar()
+        self.body()
 
     def top_bar(self):
         # Adding Top bar
@@ -36,9 +37,16 @@ class FileManager(Frame):
         self.open_folder_button.grid(column=0, row=1)
         self.open_folder_button.image = images[0]
 
+    def body(self):
+        self.body = ttk.Frame(
+            self.parent, borderwidth=2, width=1200, height=700, style='B.TFrame')
+        self.body.pack(fill=BOTH)
+
     def config(self):
         self.style.configure('W.TFrame', foreground='#aecccf',
                              background='#aecccf')
+        self.style.configure('B.TFrame', foreground='#ffcccf',
+                             background='#ffcccf')
 
     def load_top_bar_images(self):
         images = []
@@ -52,7 +60,6 @@ class FileManager(Frame):
     def select_folder(self):
         path = filedialog.askdirectory()
         self._folder_path.set(path)
-        print(self._folder_path.get(), self._selected_folder.get())
 
     @ staticmethod
     def resource_path(relative_path):
